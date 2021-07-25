@@ -9,7 +9,7 @@ app.use(express.json());
 
 async function lastbillpaid(a) {
   try {
-    const response = await axios.get('https://800mycoke.ae/askArwa/getChatResponse.jsp?customerid='+a);
+    const response = await axios.get('http://qatest.800mycoke.ae:9090/askArwa/getChatResponse.jsp?customerid='+a);
     console.log(response.status);
     return "Pending Amount Status: "+response.data.last_bill_paid.msg
   } catch (error) {
@@ -20,7 +20,7 @@ async function lastbillpaid(a) {
 
 async function nextbilldue(a) {
   try {
-    const response = await axios.get('https://800mycoke.ae/askArwa/getChatResponse.jsp?customerid='+a);
+    const response = await axios.get('http://qatest.800mycoke.ae:9090/askArwa/getChatResponse.jsp?customerid='+a);
     console.log(response.status);
     return "Next Bill Due Status: "+response.data.next_bill_due.msg
   } catch (error) {
@@ -31,7 +31,7 @@ async function nextbilldue(a) {
 
 async function soa(a) {
   try {
-    const response = await axios.get('https://800mycoke.ae/askArwa/getChatResponse.jsp?customerid='+a);
+    const response = await axios.get('http://qatest.800mycoke.ae:9090/askArwa/getChatResponse.jsp?customerid='+a);
     console.log(response.status);
     return "Outstanding Amount Status: "+response.data.total_outstanding.outstanding
   } catch (error) {
@@ -42,7 +42,7 @@ async function soa(a) {
 
 async function orderstatus(a) {
   try {
-    const response = await axios.get('https://800mycoke.ae/askArwa/getChatResponse.jsp?customerid='+a);
+    const response = await axios.get('http://qatest.800mycoke.ae:9090/askArwa/getChatResponse.jsp?customerid='+a);
     console.log(response.status);
     return "Order Status: "+response.data.order_details.msg
   } catch (error) {
@@ -53,7 +53,7 @@ async function orderstatus(a) {
 
 async function coolercomplain(a,body) {
   try {
-    const response = await axios.get('https://800mycoke.ae/askArwa/getChatResponse.jsp?customerid='+a);
+    const response = await axios.get('http://qatest.800mycoke.ae:9090/askArwa/getChatResponse.jsp?customerid='+a);
     console.log(response.status);
     const responsemail = await axios.get('https://800mycoke.ae/askArwa/sendMail.jsp?customerId='+a+'&body='+body+'&subject=Cooler%20Complain&countryCode='+response.data.country);
     console.log(responsemail.status);
@@ -65,7 +65,7 @@ async function coolercomplain(a,body) {
 }
 async function othercomplain(a,body) {
   try {
-    const response = await axios.get('https://800mycoke.ae/askArwa/getChatResponse.jsp?customerid='+a);
+    const response = await axios.get('http://qatest.800mycoke.ae:9090/askArwa/getChatResponse.jsp?customerid='+a);
     console.log(response.status);
     const responsemail = await axios.get('https://800mycoke.ae/askArwa/sendMail.jsp?customerId='+a+'&body='+body+'&subject=Other%20Complain&countryCode='+response.data.country);
     console.log(responsemail.status);
