@@ -1,0 +1,5 @@
+to enable ngrok
+./ngrok http 3000
+
+to run server
+node index.js
