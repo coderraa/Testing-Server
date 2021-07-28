@@ -135,7 +135,7 @@ app.post('/', (req, res) => {
     })}
   
   else if(req.body.queryResult.parameters.Trigger_entity=='Order Cancellation'){
-    orderstatus(req.body.queryResult.parameters['phone-number']).then(function(resp) {
+    ordercancel(req.body.queryResult.parameters['phone-number']).then(function(resp) {
       console.log(resp)//resp is reponse from get api, 
       //res.send will send this to dialogflow
       res.send({
