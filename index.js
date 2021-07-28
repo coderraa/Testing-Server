@@ -40,11 +40,22 @@ async function soa(a) {
   }
 }
 
+async function ordercancel(a) {
+  try {
+    const response = await axios.get('http://qatest.800mycoke.ae:9090/askArwa/getChatResponse.jsp?customerid='+a);
+    console.log(response.status);
+    return "Pending Amount Status: "+response.data.order_details.orderCancellation
+  } catch (error) {
+    console.error(error);
+    return error
+  }
+}
+
 async function orderstatus(a) {
   try {
     const response = await axios.get('http://qatest.800mycoke.ae:9090/askArwa/getChatResponse.jsp?customerid='+a);
     console.log(response.status);
-    return "Order Status: "+response.data.order_details.msg
+    return "Order Status: "+response.data.order_details.status
   } catch (error) {
     console.error(error);
     return error
@@ -108,7 +119,22 @@ app.post('/', (req, res) => {
       })
     })}
   
-  else if(req.body.queryResult.parameters.trigger_entity=='Order Status'){
+  else if(req.body.queryResult.parameters.Trigger_entity=='Order Status'){
+    orderstatus(req.body.queryResult.parameters['phone-number']).then(function(resp) {
+      console.log(resp)//resp is reponse from get api, 
+      //res.send will send this to dialogflow
+      res.send({
+        "fulfillmentMessages": [
+          {
+            "text": {
+              "text": [JSON.stringify(resp)]
+            }
+          }
+        ]
+      })
+    })}
+  
+  else if(req.body.queryResult.parameters.Trigger_entity=='Order Cancellation'){
     orderstatus(req.body.queryResult.parameters['phone-number']).then(function(resp) {
       console.log(resp)//resp is reponse from get api, 
       //res.send will send this to dialogflow
