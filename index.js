@@ -44,7 +44,10 @@ async function ordercancel(a) {
   try {
     const response = await axios.get('http://qatest.800mycoke.ae:9090/askArwa/getChatResponse.jsp?customerid='+a);
     console.log(response.status);
-    return "Pending Amount Status: "+response.data.order_details.orderCancellation
+    if (response.data.order_details.orderCancellation != "NA") {
+    return "Yes"+ " "+"No" //;
+  } else {
+    return "Order Cancellation: "+response.data.order_details.orderCancellation //;
   } catch (error) {
     console.error(error);
     return error
