@@ -40,14 +40,23 @@ async function soa(a) {
   }
 }
 
+async function intialcooler(a) {
+  try {
+    const response = await axios.get('http://qatest.800mycoke.ae:9090/askArwa/getChatResponse.jsp?customerid='+a);
+    console.log(response.status);
+    return response.data.asset_details
+  } catch (error) {
+    console.error(error);
+    return error
+  }
+}
+
+
 async function ordercancel(a) {
   try {
     const response = await axios.get('http://qatest.800mycoke.ae:9090/askArwa/getChatResponse.jsp?customerid='+a);
     console.log(response.status);
-    if (response.data.order_details.orderCancellation != "NA") {
-    return "Yes"+ " "+"No" //;
-  } else {
-    return "Order Cancellation: "+response.data.order_details.orderCancellation //;
+    return "Order Cancellation: "+response.data.order_details.orderCancellation
   } catch (error) {
     console.error(error);
     return error
@@ -137,7 +146,42 @@ app.post('/', (req, res) => {
       })
     })}
   
-  else if(req.body.queryResult.parameters.Trigger_entity=='Order Cancellation'){
+    else if(req.body.queryResult.parameters.Trigger_entity=='Cooler Complaints'){
+      intialcooler(req.body.queryResult.parameters['phone-number']).then(function(resp) {
+        console.log(resp)//resp is reponse from get api, 
+        //res.send will send this to dialogflow
+        res.send({
+          "fulfillmentMessages": [
+            {
+              "text": {
+                "text": [JSON.stringify(resp)]
+              }
+            }
+          ]
+        })
+      })}
+    
+      else if(req.body.queryResult.parameters.Trigger_entity=='Equipment Check'){
+        intialcooler(req.body.queryResult.parameters['phone-number']).then(function(resp) {
+          console.log(resp)//resp is reponse from get api, 
+          //res.send will send this to dialogflow
+          res.send({
+            "fulfillmentMessages": [
+              {
+                "text": {
+                  "text": [JSON.stringify(resp)]
+                }
+              }
+            ]
+          })
+        })}
+    
+  
+  
+  
+  
+  
+      else if(req.body.queryResult.parameters.Trigger_entity=='Order Cancellation'){
     ordercancel(req.body.queryResult.parameters['phone-number']).then(function(resp) {
       console.log(resp)//resp is reponse from get api, 
       //res.send will send this to dialogflow
