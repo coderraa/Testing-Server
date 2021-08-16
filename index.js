@@ -162,7 +162,7 @@ app.post('/', (req, res) => {
       })}
     
       else if(req.body.queryResult.intent.displayName=='Equipment Check'){
-        intialcooler(req.body.queryResult.parameters['phone-number']).then(function(resp) {
+        intialcooler(req.body.queryResult.parameters['Mobile_number']).then(function(resp) {
           console.log(resp)//resp is reponse from get api, 
           //res.send will send this to dialogflow
           res.send({
