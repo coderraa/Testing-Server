@@ -101,7 +101,7 @@ async function othercomplain(a,body) {
 
 app.post('/', (req, res) => {
   console.log(req.body)//this will print request data from dialogflow bot
-  if(req.body.queryResult.parameters.Trigger_entity=='Last Bill'){
+  if(req.body.queryResult.parameters.trigger_entity=='Last Bill'){
     lastbillpaid(req.body.queryResult.parameters['phone-number']).then(function(resp) {
     console.log(resp)//resp is reponse from get api, 
     //res.send will send this to dialogflow
@@ -116,7 +116,7 @@ app.post('/', (req, res) => {
     })
   })}
 
-  else if(req.body.queryResult.parameters.Trigger_entity=='Next Bill'){
+  else if(req.body.queryResult.parameters.trigger_entity=='Next Bill'){
     nextbilldue(req.body.queryResult.parameters['phone-number']).then(function(resp) {
       console.log(resp)//resp is reponse from get api, 
       //res.send will send this to dialogflow
@@ -131,7 +131,7 @@ app.post('/', (req, res) => {
       })
     })}
   
-  else if(req.body.queryResult.parameters.Trigger_entity=='Order Status'){
+  else if(req.body.queryResult.parameters.trigger_entity=='Order Status'){
     orderstatus(req.body.queryResult.parameters['phone-number']).then(function(resp) {
       console.log(resp)//resp is reponse from get api, 
       //res.send will send this to dialogflow
@@ -146,7 +146,7 @@ app.post('/', (req, res) => {
       })
     })}
   
-    else if(req.body.queryResult.parameters.Trigger_entity=='Cooler Complaints'){
+    else if(req.body.queryResult.parameters.trigger_entity=='Cooler Complaints'){
       intialcooler(req.body.queryResult.parameters['phone-number']).then(function(resp) {
         console.log(resp)//resp is reponse from get api, 
         //res.send will send this to dialogflow
@@ -161,7 +161,7 @@ app.post('/', (req, res) => {
         })
       })}
     
-      else if(req.body.queryResult.parameters.Trigger_entity=='Equipment Check'){
+      else if(req.body.queryResult.intent.displayName=='Equipment Check'){
         intialcooler(req.body.queryResult.parameters['phone-number']).then(function(resp) {
           console.log(resp)//resp is reponse from get api, 
           //res.send will send this to dialogflow
@@ -181,7 +181,7 @@ app.post('/', (req, res) => {
   
   
   
-      else if(req.body.queryResult.parameters.Trigger_entity=='Order Cancellation'){
+      else if(req.body.queryResult.parameters.trigger_entity=='Order Cancellation'){
     ordercancel(req.body.queryResult.parameters['phone-number']).then(function(resp) {
       console.log(resp)//resp is reponse from get api, 
       //res.send will send this to dialogflow
@@ -286,7 +286,7 @@ app.post('/', (req, res) => {
       })}
   
   
-    else if(req.body.queryResult.parameters.Trigger_entity=='SOA'){
+    else if(req.body.queryResult.parameters.trigger_entity=='SOA'){
       soa(req.body.queryResult.parameters['phone-number']).then(function(resp) {
         console.log(resp)//resp is reponse from get api, 
         //res.send will send this to dialogflow
