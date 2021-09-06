@@ -78,7 +78,7 @@ async function coolercomplain(a,body) {
   try {
     const response = await axios.get('http://qatest.800mycoke.ae:9090/askArwa/getChatResponse.jsp?customerid='+a);
     console.log(response.status);
-    const responsemail = await axios.get('http://qatest.800mycoke.ae:9090/askArwa/sendMail.jsp?customerId='+a+'&body='+body+'&subject=Cooler%20Complain&countryCode='+response.data.country);
+    const responsemail = await axios.get('http://qatest.800mycoke.ae:9090/askArwa/sendMail.jsp?customerId='+a+'&body='+body+'&countryCode='+response.data.country);
     console.log(responsemail.status);
     return responsemail.data.msg
   } catch (error) {
@@ -86,6 +86,19 @@ async function coolercomplain(a,body) {
     return error
   }
 }
+
+async function verify(a,id1,id2) {
+  try {
+    const response = await axios.get('http://qatest.800mycoke.ae:9090/askArwa/verifyEquipment.jsp?customerId='+a+'&assetId='+id1+'&assetId2='+id2+'&msg='+"not varified");
+    console.log(response.status);
+    return "Opps! We were not able to find your equipment. A request is send to our team, and they will be in contact with you shortly."
+  } catch (error) {
+    console.error(error);
+    return error
+  }
+}
+
+
 async function othercomplain(a,body) {
   try {
     const response = await axios.get('http://qatest.800mycoke.ae:9090/askArwa/getChatResponse.jsp?customerid='+a);
@@ -161,7 +174,23 @@ app.post('/', (req, res) => {
         })
       })}
     
-      else if(req.body.queryResult.intent.displayName=='Equipment Check'){
+      else if(req.body.queryResult.intent.displayName=='Error detect'){
+        verify(req.body.queryResult.parameters['mobile_number','equipment_id','equipment_id']).then(function(resp) {
+          console.log(resp)//resp is reponse from get api, 
+          //res.send will send this to dialogflow
+          res.send({
+            "fulfillmentMessages": [
+              {
+                "text": {
+                  "text": [JSON.stringify(resp)]
+                }
+              }
+            ]
+          })
+        })}
+      
+  
+      else if(req.body.queryResult.intent.displayName=='Verify Equipment'){
         intialcooler(req.body.queryResult.parameters['Mobile_number']).then(function(resp) {
           console.log(resp)//resp is reponse from get api, 
           //res.send will send this to dialogflow
@@ -176,6 +205,22 @@ app.post('/', (req, res) => {
           })
         })}
     
+
+        
+        else if(req.body.queryResult.intent.displayName=='Mobile_number'){
+          intialcooler(req.body.queryResult.parameters['phone-number']).then(function(resp) {
+            console.log(resp)//resp is reponse from get api, 
+            //res.send will send this to dialogflow
+            res.send({
+              "fulfillmentMessages": [
+                {
+                  "text": {
+                    "text": [JSON.stringify(resp)]
+                  }
+                }
+              ]
+            })
+          })}
   
   
   
@@ -211,8 +256,8 @@ app.post('/', (req, res) => {
         })
       })}
 
-      else if(req.body.queryResult.intent.displayName=='Door Problem'){
-        coolercomplain(req.body.queryResult.parameters['phone-number'],req.body.queryResult.queryText).then(function(resp) {
+      else if(req.body.queryResult.intent.displayName=='Door_Problem'){
+        coolercomplain(req.body.queryResult.parameters['mobile_number'],req.body.queryResult.queryText).then(function(resp) {
           console.log(resp)//resp is reponse from get api, 
           //res.send will send this to dialogflow
           res.send({
@@ -284,6 +329,22 @@ app.post('/', (req, res) => {
           ]
         })
       })}
+
+
+      else if(req.body.queryResult.intent.displayName=='error_verify'){
+        verify(req.body.queryResult.parameters['mobile_number','equipment_id','equipment_id']).then(function(resp) {
+          console.log(resp)//resp is reponse from get api, 
+          //res.send will send this to dialogflow
+          res.send({
+            "fulfillmentMessages": [
+              {
+                "text": {
+                  "text": [JSON.stringify(resp)]
+                }
+              }
+            ]
+          })
+        })}
   
   
     else if(req.body.queryResult.parameters.trigger_entity=='SOA'){
