@@ -108,6 +108,7 @@ async function othercomplain(a,body) {
     return responsemail.data.msg
   } catch (error) {
     console.error(error);
+    console.error(error);
     return error
   }
 }
@@ -241,7 +242,7 @@ app.post('/', (req, res) => {
       })
     })}
   
-  else if(req.body.queryResult.intent.displayName=='Others Cooler mail trigger'){
+  else if(req.body.queryResult.intent.displayName=='Others_Cooler_mail_trigger'){
       othercomplain(req.body.queryResult.parameters['phone-number'],req.body.queryResult.queryText).then(function(resp) {
         console.log(resp)//resp is reponse from get api, 
         //res.send will send this to dialogflow
@@ -249,7 +250,7 @@ app.post('/', (req, res) => {
           "fulfillmentMessages": [
             {
               "text": {
-                "text": [JSON.stringify(resp)+" Your Cooler Complain query: --"+req.body.queryResult.queryResult.queryText+"-- has been registered. We will Contact you soon."]
+                "text": [JSON.stringify(resp)+" Your Cooler Complain query: --"+req.body.queryResult.queryText+"-- has been registered. We will Contact you soon."]
               }
             }
           ]
@@ -257,7 +258,7 @@ app.post('/', (req, res) => {
       })}
 
       else if(req.body.queryResult.intent.displayName=='Door_Problem'){
-        coolercomplain(req.body.queryResult.parameters['mobile_number'],req.body.queryResult.queryText).then(function(resp) {
+        coolercomplain(req.body.queryResult.parameters['phone-number'],req.body.queryResult.queryText).then(function(resp) {
           console.log(resp)//resp is reponse from get api, 
           //res.send will send this to dialogflow
           res.send({
@@ -270,8 +271,8 @@ app.post('/', (req, res) => {
             ]
           })
         })}
-        else if(req.body.queryResult.intent.displayName=='Light Not Working'){
-          coolercomplain(req.body.queryResult.parameters['phone-number'],req.body.queryResult.queryText).then(function(resp) {
+        else if(req.body.queryResult.intent.displayName=='Light_Not_Working'){
+          coolercomplain(req.body.queryResult.parameters['mobile_number'],req.body.queryResult.queryText).then(function(resp) {
             console.log(resp)//resp is reponse from get api, 
             //res.send will send this to dialogflow
             res.send({
@@ -285,8 +286,8 @@ app.post('/', (req, res) => {
             })
           })}
 
-          else if(req.body.queryResult.intent.displayName=='Water Leakage'){
-            coolercomplain(req.body.queryResult.parameters['phone-number'],req.body.queryResult.queryText).then(function(resp) {
+          else if(req.body.queryResult.intent.displayName=='Water_Leakage'){
+            coolercomplain(req.body.queryResult.parameters['mobile_number'],req.body.queryResult.queryText).then(function(resp) {
               console.log(resp)//resp is reponse from get api, 
               //res.send will send this to dialogflow
               res.send({
@@ -300,7 +301,7 @@ app.post('/', (req, res) => {
               })
             })}
 
-            else if(req.body.queryResult.intent.displayName=='Cooling Issue'){
+            else if(req.body.queryResult.intent.displayName=='Cooling_Issue'){
               coolercomplain(req.body.queryResult.parameters['phone-number'],req.body.queryResult.queryText).then(function(resp) {
                 console.log(resp)//resp is reponse from get api, 
                 //res.send will send this to dialogflow
